@@ -8,4 +8,4 @@ class SignIn extends Component {
   }
 }
 
-export default App;
+export default SignIn;
