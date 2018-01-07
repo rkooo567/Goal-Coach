@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { firebaseApp } from '../firebase';
 
 class SignUp extends Component {
@@ -14,13 +15,12 @@ class SignUp extends Component {
   }
 
   signUp() {
-    console.log('sign up required')
     console.log(this.state);
     const email = this.state.email
     const password = this.state.password
     firebaseApp.auth().createUserWithEmailAndPassword(email, password)
       .catch(error => {
-        console.log('error : ', error);
+        console.log('sign up error : ', error);
         this.setState({
           error: error
         })
@@ -30,7 +30,7 @@ class SignUp extends Component {
   render() {
     return (
       <div className='form-inline' style={{margin:'5%'}}>
-        <h2>Sigh up</h2>
+        <h2>Sign up</h2>
         <div className='form-group'>
           <input
             type='text'
@@ -38,7 +38,7 @@ class SignUp extends Component {
             placeholder='email'
             onKeyPress={event => {
               if (event.key === 'Enter'){
-                this.signUp();
+                this.signIn();
               }
             }}
             onChange={event => this.setState({
@@ -59,15 +59,16 @@ class SignUp extends Component {
               password: event.target.value
             })}
           />
-        <button
-          className='btn btn-primary'
-          type='button'
-          onClick={() => this.signUp()}
-        >
+          <button
+            className='btn btn-primary'
+            type='button'
+            onClick={() => this.signUp()}
+          >
             Sign up
           </button>
         </div>
         <div>{this.state.error.message}</div>
+        <div><Link to={'/signin'}>Already a user? Sign In</Link></div>
       </div>
     )
   }
